@@ -1,0 +1,2 @@
+# QRCode
+QRcode generate plugin
