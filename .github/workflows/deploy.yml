@@ -9,7 +9,7 @@ on:
       - main
 
 # ここに以下の permissions ブロックを追記
-permissions:
+permissions: #
   contents: write # リポジトリのコンテンツへの書き込み権限を許可
   pages: write    # GitHub Pagesへの書き込み権限を許可
   id-token: write # OIDC（OpenID Connect）トークンの発行を許可
