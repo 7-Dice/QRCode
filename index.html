@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS QRコードジェネレーター</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+   
+    <!-- head内に追加 -->
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #input-area {
+            margin-bottom: 30px;
+        }
+        #text-input {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #qrcode-output {
+            margin: 20px auto;
+            display: inline-block;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>QRコード生成</h1>
+
+    <div id="input-area">
+        <p>QRコードにしたいテキストまたはURLを入力してください。</p>
+        <input type="text" id="text-input" placeholder="例: https://www.google.com/" value="Hello World!">
+    </div>
+
+    <div id="qrcode-output">
+        </div>
+
+    <input type="text" id="text-input" autocomplete="off" placeholder="例: https://www.google.com/" value="">
+    <div id="qrcode-output"></div>
+    <button id="download-btn">ダウンロード</button>
+    <script>
+        const textInput = document.getElementById('text-input');
+        const qrcodeOutput = document.getElementById('qrcode-output');
+        const downloadBtn = document.getElementById('download-btn');
+
+        function generateQRCode(text) {
+         qrcodeOutput.innerHTML = '';
+            if (!text) {
+             qrcodeOutput.innerHTML = '<span style="color: #888;">テキストを入力してください</span>';
+             return;
+         }
+            new QRCode(qrcodeOutput, {
+                text: text,
+                width: 256,
+                height: 256,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+         });
+        }
+
+        generateQRCode(textInput.value);
+
+        textInput.addEventListener('input', () => {
+            generateQRCode(textInput.value);
+        });
+
+        downloadBtn.addEventListener('click', () => {
+         const img = qrcodeOutput.querySelector('img');
+            if (img && img.src) {
+             const a = document.createElement('a');
+             a.href = img.src;
+                a.download = 'qrcode.png';
+             a.click();
+         }
+        });
+        </script>
+    </body>
+</html>
