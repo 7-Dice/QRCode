@@ -36,7 +36,18 @@
             display: inline-block;
             padding: 10px;
             border: 1px solid #ddd;
+             /* 追加・変更：ブロック要素として扱うことで、子要素のテーブルを中央に寄せやすくする */
+            display: block; 
+            text-align: center; /* 子要素のtable（インライン要素扱い）を中央に寄せる */
         }
+
+         /* 【重要】ライブラリが生成するtableを中央に寄せるための設定 */
+        #qrcode-output table {
+        /* ブロック要素の中にあるテーブルを中央に寄せる定石 */
+            margin-left: auto;
+            margin-right: auto;
+    }
+
     </style>
 </head>
 <body>
