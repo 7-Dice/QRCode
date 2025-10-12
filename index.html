@@ -13,43 +13,68 @@
         navigator.serviceWorker.register('./sw.js');
         }
     </script>
-    
     <style>
-        body {
-            font-family: sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        #input-area {
-            margin-bottom: 30px;
-        }
-        #text-input {
-            width: 80%;
-            max-width: 400px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #qrcode-output {
-            margin: 20px auto;
-            display: inline-block;
-            padding: 10px;
-            border: 1px solid #ddd;
-             /* 追加・変更：ブロック要素として扱うことで、子要素のテーブルを中央に寄せやすくする */
-            display: block; 
-            text-align: center; /* 子要素のtable（インライン要素扱い）を中央に寄せる */
-        }
+    /* ======================================= */
+    /* 画面中央寄せのための新しいCSS */
+    /* ======================================= */
 
-         /* 【重要】ライブラリが生成するtableを中央に寄せるための設定 */
-        #qrcode-output table {
-        /* ブロック要素の中にあるテーブルを中央に寄せる定石 */
-            margin-left: auto;
-            margin-right: auto;
+    body {
+        font-family: sans-serif;
+    
+        /* 1. 画面の高さ全体を使えるようにする */
+        height: 100vh;
+        /* 2. bodyのデフォルトマージンをリセット */
+        margin: 0;
+        /* 3. Flexboxを有効化（中央寄せの親要素にする） */
+        display: flex;
+        /* 4. Flexアイテム（body直下の子要素）を垂直方向（上下）に中央寄せ */
+        align-items: center;
+        /* 5. Flexアイテムを水平方向（左右）に中央寄せ */
+        justify-content: center;
+    
+        /* 6. レイアウトが縦に積み重なるように設定（重要） */
+        /* これがないとすべて横一列に並んでしまうため、縦方向の配置に戻す */
+        flex-direction: column; 
     }
 
+    /* フォームとQRコードエリアはbodyの中央に配置される */
+    #input-area {
+        margin-bottom: 30px;
+    }
+
+    #text-input {
+        width: 80%;
+        max-width: 400px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    #qrcode-output {
+        /* 中央寄せのためにあった margin や display, text-align は不要 */
+        margin: 20px auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        /* 以前の中央寄せCSSは削除 */
+        /* display: block; */
+        /* text-align: center; */
+    }
+
+    /* QRコードライブラリが生成するtable要素の中央寄せ（横方向の調整） */
+    #qrcode-output table {
+        /* tableを中央に寄せるための定石。Flexbox環境下でも有効 */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* h1, p, buttonもFlexアイテムになるため、必要に応じてマージンを調整 */
+    h1 {
+        margin-top: 0;
+    }
     </style>
 </head>
+    
 <body>
 
     <h1>QRコード生成</h1>
@@ -104,3 +129,4 @@
         </script>
     </body>
 </html>
+
